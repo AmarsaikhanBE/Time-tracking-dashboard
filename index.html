@@ -1,0 +1,464 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- displays site properly based on user's device -->
+
+    <link rel="icon" type="image/png" sizes="32x32" href="./images/favicon-32x32.png">
+
+    <title>Frontend Mentor | Time tracking dashboard</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Rubik:wght@300;400;500&display=swap" rel="stylesheet">
+    <!-- Feel free to remove these styles or customise in your own stylesheet 👍 -->
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+         :root {
+            --blue: hsl(246, 80%, 60%);
+            --light-red-work: hsl(15, 100%, 70%);
+            --soft-blue-play: hsl(195, 74%, 62%);
+            --light-red-study: hsl(348, 100%, 68%);
+            --lime-green-exercise: hsl(145, 58%, 55%);
+            --violet-social: hsl(264, 64%, 52%);
+            --soft-orange-selfCare: hsl(43, 84%, 65%);
+            --very-dark-blue: hsl(226, 43%, 10%);
+            --dark-blue: hsl(235, 46%, 20%);
+            --desaturated-blue: hsl(235, 45%, 61%);
+            --pale-blue: hsl(236, 100%, 87%);
+        }
+        
+        body {
+            position: relative;
+            display: grid;
+            place-content: center;
+            min-height: 100vh;
+            font-family: 'Rubik', sans-serif;
+            background-color: var(--very-dark-blue);
+            color: #fff;
+        }
+        
+        .container {
+            margin: auto;
+            display: grid;
+            grid-template-columns: repeat(4, 200px);
+            grid-template-rows: repeat(2, 200px);
+            gap: 20px;
+        }
+        
+        .container>div {
+            position: relative;
+            border-radius: 20px;
+            overflow: hidden;
+        }
+        
+        .container>:first-child {
+            grid-row-start: 1;
+            grid-row-end: 3;
+        }
+        
+        .container>div>div {
+            border-radius: 20px;
+            padding: 20px;
+        }
+        
+        .card {
+            background-color: var(--blue);
+        }
+        
+        .card img {
+            max-width: 80px;
+            max-height: 80px;
+            border-radius: 50%;
+            border: 2px solid var(--pale-blue);
+        }
+        
+        .name-card {
+            padding: 25px 0 30px 0;
+        }
+        
+        h1,
+        a {
+            font-weight: 300;
+        }
+        
+        p,
+        a {
+            color: var(--pale-blue);
+            font-weight: 400;
+        }
+        
+        .navigation,
+        .main-tab {
+            background-color: var(--dark-blue);
+        }
+        
+        .navigation a {
+            display: block;
+            cursor: pointer;
+        }
+        
+        .navigation>:nth-child(2) {
+            margin: 20px 0;
+        }
+        
+        .navigation a:hover,
+        .navigation a.active {
+            color: #fff;
+        }
+        
+        .back-tab {
+            position: absolute;
+            top: -25px;
+            left: 0;
+            width: 100%;
+            height: 200px;
+            text-align: end;
+            z-index: -1;
+        }
+        
+        .back-tab img {
+            width: 50px;
+        }
+        
+        #work .back-tab {
+            background-color: var(--light-red-work);
+        }
+        
+        #play .back-tab {
+            background-color: var(--soft-blue-play);
+        }
+        
+        #study .back-tab {
+            background-color: var(--light-red-study);
+        }
+        
+        #exercise .back-tab {
+            background-color: var(--lime-green-exercise);
+        }
+        
+        #social .back-tab {
+            background-color: var(--violet-social);
+        }
+        
+        #selfCare .back-tab {
+            background-color: var(--soft-orange-selfCare);
+        }
+        
+        .main-tab {
+            margin-top: 40px;
+            cursor: pointer;
+        }
+        
+        .main-tab:hover {
+            background-color: var(--desaturated-blue);
+        }
+        
+        .tab-head {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+        
+        h2 {
+            font-size: 18px;
+            font-weight: 500;
+        }
+        
+        .tab-head svg:hover path {
+            fill: #fff;
+        }
+        
+        h3 {
+            font-size: 40px;
+            font-weight: 300;
+        }
+        
+        .attribution {
+            font-size: 11px;
+            text-align: center;
+            position: absolute;
+            left: 0;
+            bottom: 0;
+            width: 100%;
+        }
+        
+        .attribution a {
+            color: hsl(228, 45%, 44%);
+        }
+        
+        @media (max-width: 900px) {
+            .container {
+                padding: 5px;
+                grid-template-columns: repeat(1, 365px);
+                grid-template-rows: auto;
+            }
+            .card,
+            .navigation,
+            .time-show {
+                display: flex;
+                align-items: center;
+                justify-content: space-between;
+            }
+            .navigation :nth-child(2) {
+                margin: 0;
+            }
+            .back-tab {
+                top: -30px;
+            }
+            .back-tab img {
+                width: 80px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <div>
+            <div class="card">
+                <img src="images/image-jeremy.png" alt="portrait">
+                <div class="name-card">
+                    <p>Report for</p>
+                    <h1>Jeremy Robson</h1>
+                </div>
+            </div>
+            <div class="navigation">
+                <a id="dailyBtn" onclick="daily()">Daily</a>
+                <a id="weeklyBtn" onclick="weekly()">Weekly</a>
+                <a id="monthlyBtn" onclick="monthly()">Monthly</a>
+            </div>
+        </div>
+        <div id="work">
+            <div class="back-tab">
+                <img src="images/icon-work.svg" alt="work-bg">
+            </div>
+            <div class="main-tab">
+                <div class="tab-head">
+                    <h2>Work</h2>
+                    <svg width="21" height="5" xmlns="http://www.w3.org/2000/svg"><path d="M2.5 0a2.5 2.5 0 1 1 0 5 2.5 2.5 0 0 1 0-5Zm8 0a2.5 2.5 0 1 1 0 5 2.5 2.5 0 0 1 0-5Zm8 0a2.5 2.5 0 1 1 0 5 2.5 2.5 0 0 1 0-5Z" fill="#BBC0FF" fill-rule="evenodd"/></svg>
+                </div>
+                <div class="time-show">
+                    <h3><span class="hour"></span>hrs</h3>
+                    <p>Last <span class="lapse"></span> - <span class="lastHour"></span>hrs</p>
+                </div>
+            </div>
+        </div>
+        <div id="play">
+            <div class="back-tab">
+                <img src="images/icon-play.svg" alt="play-bg">
+            </div>
+            <div class="main-tab">
+                <div class="tab-head">
+                    <h2>Play</h2>
+                    <svg width="21" height="5" xmlns="http://www.w3.org/2000/svg"><path d="M2.5 0a2.5 2.5 0 1 1 0 5 2.5 2.5 0 0 1 0-5Zm8 0a2.5 2.5 0 1 1 0 5 2.5 2.5 0 0 1 0-5Zm8 0a2.5 2.5 0 1 1 0 5 2.5 2.5 0 0 1 0-5Z" fill="#BBC0FF" fill-rule="evenodd"/></svg>
+                </div>
+                <div class="time-show">
+                    <h3><span class="hour"></span>hrs</h3>
+                    <p>Last <span class="lapse"></span> - <span class="lastHour"></span>hrs</p>
+                </div>
+            </div>
+        </div>
+        <div id="study">
+            <div class="back-tab">
+                <img src="images/icon-study.svg" alt="study-bg">
+            </div>
+            <div class="main-tab">
+                <div class="tab-head">
+                    <h2>Study</h2>
+                    <svg width="21" height="5" xmlns="http://www.w3.org/2000/svg"><path d="M2.5 0a2.5 2.5 0 1 1 0 5 2.5 2.5 0 0 1 0-5Zm8 0a2.5 2.5 0 1 1 0 5 2.5 2.5 0 0 1 0-5Zm8 0a2.5 2.5 0 1 1 0 5 2.5 2.5 0 0 1 0-5Z" fill="#BBC0FF" fill-rule="evenodd"/></svg>
+                </div>
+                <div class="time-show">
+                    <h3><span class="hour"></span>hrs</h3>
+                    <p>Last <span class="lapse"></span> - <span class="lastHour"></span>hrs</p>
+                </div>
+            </div>
+        </div>
+        <div id="exercise">
+            <div class="back-tab">
+                <img src="images/icon-exercise.svg" alt="exercise-bg">
+            </div>
+            <div class="main-tab">
+                <div class="tab-head">
+                    <h2>Exercise</h2>
+                    <svg width="21" height="5" xmlns="http://www.w3.org/2000/svg"><path d="M2.5 0a2.5 2.5 0 1 1 0 5 2.5 2.5 0 0 1 0-5Zm8 0a2.5 2.5 0 1 1 0 5 2.5 2.5 0 0 1 0-5Zm8 0a2.5 2.5 0 1 1 0 5 2.5 2.5 0 0 1 0-5Z" fill="#BBC0FF" fill-rule="evenodd"/></svg>
+                </div>
+                <div class="time-show">
+                    <h3><span class="hour"></span>hrs</h3>
+                    <p>Last <span class="lapse"></span> - <span class="lastHour"></span>hrs</p>
+                </div>
+            </div>
+        </div>
+        <div id="social">
+            <div class="back-tab">
+                <img src="images/icon-social.svg" alt="social-bg">
+            </div>
+            <div class="main-tab">
+                <div class="tab-head">
+                    <h2>Social</h2>
+                    <svg width="21" height="5" xmlns="http://www.w3.org/2000/svg"><path d="M2.5 0a2.5 2.5 0 1 1 0 5 2.5 2.5 0 0 1 0-5Zm8 0a2.5 2.5 0 1 1 0 5 2.5 2.5 0 0 1 0-5Zm8 0a2.5 2.5 0 1 1 0 5 2.5 2.5 0 0 1 0-5Z" fill="#BBC0FF" fill-rule="evenodd"/></svg>
+                </div>
+                <div class="time-show">
+                    <h3><span class="hour"></span>hrs</h3>
+                    <p>Last <span class="lapse"></span> - <span class="lastHour"></span>hrs</p>
+                </div>
+            </div>
+        </div>
+        <div id="selfCare">
+            <div class="back-tab">
+                <img src="images/icon-self-care.svg" alt="self-care-bg">
+            </div>
+            <div class="main-tab">
+                <div class="tab-head">
+                    <h2>Self Care</h2>
+                    <svg width="21" height="5" xmlns="http://www.w3.org/2000/svg"><path d="M2.5 0a2.5 2.5 0 1 1 0 5 2.5 2.5 0 0 1 0-5Zm8 0a2.5 2.5 0 1 1 0 5 2.5 2.5 0 0 1 0-5Zm8 0a2.5 2.5 0 1 1 0 5 2.5 2.5 0 0 1 0-5Z" fill="#BBC0FF" fill-rule="evenodd"/></svg>
+                </div>
+                <div class="time-show">
+                    <h3><span class="hour"></span>hrs</h3>
+                    <p>Last <span class="lapse"></span> - <span class="lastHour"></span>hrs</p>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script>
+        const workCurrent = {
+            daily: 5,
+            weekly: 32,
+            monthly: 103
+        }
+        const workLast = {
+            daily: 7,
+            weekly: 36,
+            monthly: 128
+        }
+        const playCurrent = {
+            daily: 1,
+            weekly: 10,
+            monthly: 23
+        }
+        const playLast = {
+            daily: 2,
+            weekly: 8,
+            monthly: 29
+        }
+        const studyCurrent = {
+            daily: 0,
+            weekly: 4,
+            monthly: 13
+        }
+        const studyLast = {
+            daily: 1,
+            weekly: 7,
+            monthly: 19
+        }
+        const exerciseCurrent = {
+            daily: 1,
+            weekly: 4,
+            monthly: 11
+        }
+        const exerciseLast = {
+            daily: 1,
+            weekly: 5,
+            monthly: 18
+        }
+        const socialCurrent = {
+            daily: 1,
+            weekly: 5,
+            monthly: 21
+        }
+        const socialLast = {
+            daily: 3,
+            weekly: 10,
+            monthly: 23
+        }
+        const selfCareCurrent = {
+            daily: 0,
+            weekly: 2,
+            monthly: 7
+        }
+        const selfCareLast = {
+            daily: 1,
+            weekly: 2,
+            monthly: 11
+        }
+        const activeRemove = () => {
+            const btn = document.querySelectorAll('.navigation a')
+            for (let i = 0; i < 3; i++) {
+                btn[i].className = ''
+            }
+        }
+        const daily = () => {
+            activeRemove()
+            dailyBtn.className = 'active'
+            work.querySelector('.hour').textContent = workCurrent.daily
+            work.querySelector('.lastHour').textContent = workLast.daily
+            play.querySelector('.hour').textContent = playCurrent.daily
+            play.querySelector('.lastHour').textContent = playLast.daily
+            study.querySelector('.hour').textContent = studyCurrent.daily
+            study.querySelector('.lastHour').textContent = studyLast.daily
+            exercise.querySelector('.hour').textContent = exerciseCurrent.daily
+            exercise.querySelector('.lastHour').textContent = exerciseLast.daily
+            social.querySelector('.hour').textContent = socialCurrent.daily
+            social.querySelector('.lastHour').textContent = socialLast.daily
+            selfCare.querySelector('.hour').textContent = selfCareCurrent.daily
+            selfCare.querySelector('.lastHour').textContent = selfCareLast.daily
+            const lapse = document.querySelectorAll('.lapse')
+            for (let i = 0; i < 6; i++) {
+                lapse[i].textContent = 'day'
+            }
+        }
+        const weekly = () => {
+            activeRemove()
+            weeklyBtn.className = 'active'
+            work.querySelector('.hour').textContent = workCurrent.weekly
+            work.querySelector('.lastHour').textContent = workLast.weekly
+            play.querySelector('.hour').textContent = playCurrent.weekly
+            play.querySelector('.lastHour').textContent = playLast.weekly
+            study.querySelector('.hour').textContent = studyCurrent.weekly
+            study.querySelector('.lastHour').textContent = studyLast.weekly
+            exercise.querySelector('.hour').textContent = exerciseCurrent.weekly
+            exercise.querySelector('.lastHour').textContent = exerciseLast.weekly
+            social.querySelector('.hour').textContent = socialCurrent.weekly
+            social.querySelector('.lastHour').textContent = socialLast.weekly
+            selfCare.querySelector('.hour').textContent = selfCareCurrent.weekly
+            selfCare.querySelector('.lastHour').textContent = selfCareLast.weekly
+            const lapse = document.querySelectorAll('.lapse')
+            for (let i = 0; i < 6; i++) {
+                lapse[i].textContent = 'week'
+            }
+        }
+        const monthly = () => {
+            activeRemove()
+            monthlyBtn.className = 'active'
+            work.querySelector('.hour').textContent = workCurrent.monthly
+            work.querySelector('.lastHour').textContent = workLast.monthly
+            play.querySelector('.hour').textContent = playCurrent.monthly
+            play.querySelector('.lastHour').textContent = playLast.monthly
+            study.querySelector('.hour').textContent = studyCurrent.monthly
+            study.querySelector('.lastHour').textContent = studyLast.monthly
+            exercise.querySelector('.hour').textContent = exerciseCurrent.monthly
+            exercise.querySelector('.lastHour').textContent = exerciseLast.monthly
+            social.querySelector('.hour').textContent = socialCurrent.monthly
+            social.querySelector('.lastHour').textContent = socialLast.monthly
+            selfCare.querySelector('.hour').textContent = selfCareCurrent.monthly
+            selfCare.querySelector('.lastHour').textContent = selfCareLast.monthly
+            const lapse = document.querySelectorAll('.lapse')
+            for (let i = 0; i < 6; i++) {
+                lapse[i].textContent = 'month'
+            }
+        }
+        weekly()
+    </script>
+    <div class="attribution">
+        Challenge by <a href="https://www.frontendmentor.io?ref=challenge" target="_blank">Frontend Mentor</a>. Coded by <a href="#">AmarsaikhanBE</a>.
+    </div>
+</body>
+
+</html>
